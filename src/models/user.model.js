@@ -1,6 +1,7 @@
 "use strict";
 
 const { mongoose } = require("../configs/dbConnection");
+const passwordEncrypt = require("../helpers/passwordEncrypt");
 
 const UserSchema = new mongoose.Schema(
     {
@@ -52,25 +53,29 @@ const UserSchema = new mongoose.Schema(
     }
 );
 
-UserSchema.pre("save", function (next) {
-    const isEmailValidate = new RegExp(
-        "^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$"
-    ).test(this.email);
+UserSchema.pre(["save", "updateOne"], function (next) {
+    // get data from "this" when create;
+    // if process is updateOne, data will receive in "this._update"
+    const data = this?._update || this;
 
-    if (isEmailValidate) {
-        const isPasswordValidate =
+    const isEmailValidated = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(data.email); // test from "data".
+
+    if (isEmailValidated) {
+        const isPasswordValidated =
             /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&].{8,}$/.test(
-                this.password
+                data.password
             );
 
-        if (isPasswordValidate) {
-            this.password = passwordEncrypt(this.password);
-            next();
+        if (isPasswordValidated) {
+            this.password = data.password = passwordEncrypt(data.password);
+
+            this._update = data; // updateOne will wait data from "this._update".
+            next(); // Allow to save.
         } else {
             next(new Error("Password not validated."));
         }
     } else {
-        next(new Error("Email is not validated"));
+        next(new Error("Email not validated."));
     }
 });
 
