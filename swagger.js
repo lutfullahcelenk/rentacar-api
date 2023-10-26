@@ -20,17 +20,6 @@ const document = {
     host: `${HOST}:${PORT}`,
     basePath: "/",
     schemes: ["http", "https"],
-    // JWT Settings:
-    securityDefinitions: {
-        JWT: {
-            type: "apiKey",
-            in: "header",
-            name: "Authorization",
-            description:
-                "Enter Your AccessToken (JWT) for Login. Example: <b>Bearer <i>...token...<i></b>",
-        },
-    },
-    security: [{ JWT: true }],
     definition: {
         "/auth/login": {
             username: {
@@ -42,17 +31,11 @@ const document = {
                 required: true,
             },
         },
-        "/auth/refresh": {
-            "token.refresh": {
-                description: "{ token: { refresh: ... } }",
-                type: "String",
-                required: true,
-            },
-        },
+
         // Models:
         User: require("./src/models/user.model").schema.obj,
-        Flight: require("./src/models/flight.model").schema.obj,
-        Passenger: require("./src/models/passenger.model").schema.obj,
+        Car: require("./src/models/car.model").schema.obj,
+        Token: require("./src/models/token.model").schema.obj,
         Reservation: require("./src/models/reservation.model").schema.obj,
     },
 };
