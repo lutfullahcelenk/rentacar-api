@@ -30,6 +30,8 @@ app.all("/", (req, res) => {
     });
 });
 
+app.use(require("./src/routes"))
+
 // errorHandler:
 app.use(require("./src/middlewares/errorHandler"));
 
