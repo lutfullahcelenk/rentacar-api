@@ -1,12 +1,12 @@
 "use strict";
 
-const Reservartion = require("../models/reservartion.model");
+const Reservation = require("../models/reservation.model");
 
 module.exports = {
     list: async (req, res) => {
         /*
-            #swagger.tags = ["Reservartions"]
-            #swagger.summary = "List Reservartions"
+            #swagger.tags = ["Reservations"]
+            #swagger.summary = "List Reservations"
             #swagger.description = `
                 You can send query with endpoint for search[], sort[], page and limit.
                 <ul> Examples:
@@ -16,11 +16,11 @@ module.exports = {
                 </ul>
             `
         */
-        const data = await res.getModelList(Reservartion);
+        const data = await res.getModelList(Reservation);
         res.status(200).send({
             error: false,
             message: "Listed",
-            details: await res.getModelListDetails(Reservartion),
+            details: await res.getModelListDetails(Reservation),
             data,
         });
     },
@@ -37,7 +37,7 @@ module.exports = {
             }
         */
 
-        const data = await Reservartion.create(req.body);
+        const data = await Reservation.create(req.body);
         res.status(201).send({
             error: false,
             message: "Created",
@@ -47,11 +47,11 @@ module.exports = {
 
     read: async (req, res) => {
         /*
-            #swagger.tags = ["Reservartions"]
-            #swagger.summary = "Get Single Reservartion"
+            #swagger.tags = ["Reservations"]
+            #swagger.summary = "Get Single Reservation"
         */
 
-        const data = await Reservartion.findOne({ _id: req.params.id });
+        const data = await Reservation.findOne({ _id: req.params.id });
         res.status(200).send({
             error: false,
             message: "Listed The One",
@@ -61,8 +61,8 @@ module.exports = {
 
     update: async (req, res) => {
         /*
-            #swagger.tags = ["Reservartions"]
-            #swagger.summary = "Update Reservartion"
+            #swagger.tags = ["Reservations"]
+            #swagger.summary = "Update Reservation"
             #swagger.parameters['body'] = {
                 in: 'body',
                 required: true,
@@ -71,24 +71,24 @@ module.exports = {
             }
         */
 
-        const data = await Reservartion.updateOne({ _id: req.params.id }, req.body, {
+        const data = await Reservation.updateOne({ _id: req.params.id }, req.body, {
             runValidators: true,
         });
         res.status(200).send({
             error: false,
             message: "Updated",
             data,
-            updatedData: await Reservartion.findOne({ _id: req.params.id }),
+            updatedData: await Reservation.findOne({ _id: req.params.id }),
         });
     },
 
     delete: async (req, res) => {
         /*
-            #swagger.tags = ["Reservartions"]
-            #swagger.summary = "Delete Reservartion"
+            #swagger.tags = ["Reservations"]
+            #swagger.summary = "Delete Reservation"
         */
 
-        const data = await Reservartion.deleteOne({ _id: req.params.id });
+        const data = await Reservation.deleteOne({ _id: req.params.id });
         res.status(data.deletedCount > 0 ? 204 : 404).send({
             error: !data.deletedCount,
             message: "Deleted",
