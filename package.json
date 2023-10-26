@@ -1,0 +1,26 @@
+{
+  "name": "mern-pizza-api",
+  "title": "Lutfullah Pizza API",
+  "version": "1.0.0",
+  "description": "Pizza API",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon",
+    "swagger": "node swagger.js && nodemon"
+  },
+  "keywords": [],
+  "author": "lutfullahclnk1104@gmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "cookie-session": "^2.0.0",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^7.6.0",
+    "morgan": "^1.10.0",
+    "redoc-express": "^2.1.0",
+    "swagger-autogen": "^2.23.6",
+    "swagger-ui-express": "^5.0.0"
+  }
+}
