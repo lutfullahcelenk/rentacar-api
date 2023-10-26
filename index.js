@@ -24,7 +24,7 @@ app.use(require("./src/middlewares/authentication"));
 app.all("/", (req, res) => {
     res.send({
         error: false,
-        message: "Welcome to Flight API",
+        message: "Welcome to RentACar API",
         document: "/documents",
         user: req.user,
     });
