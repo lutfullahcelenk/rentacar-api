@@ -2,7 +2,7 @@
 
 ### ERD:
 
-![ERD](./ErdDiagram.png)
+![ERD](./images/ErdDiagram.png)
 
 --- 
 
