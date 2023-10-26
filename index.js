@@ -30,7 +30,8 @@ app.all("/", (req, res) => {
     });
 });
 
-app.use(require("./src/routes"))
+// app.use(require("./src/routes"))
+app.use("/users", require("./src/routes/user.route"));
 
 // errorHandler:
 app.use(require("./src/middlewares/errorHandler"));
