@@ -73,6 +73,11 @@ module.exports = {
                 }
             }
         */
+        if (req?.user) {
+            // Set userIds from login info:
+            req.body.createdId = req.user._id;
+            req.body.updatedId = req.user._id;
+        }
 
         const data = await Car.create(req.body);
         res.status(201).send({
@@ -107,6 +112,10 @@ module.exports = {
                 }
             }
         */
+        if (req?.user) {
+            // Set userIds from login info:
+            req.body.updatedId = req.user._id;
+        }
 
         const data = await Car.updateOne({ _id: req.params.id }, req.body, {
             runValidators: true,
