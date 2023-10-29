@@ -1,6 +1,8 @@
 "use strict";
 
 const User = require("../models/user.model");
+const Token = require("../models/token.model");
+const passwordEncrypt = require("../helpers/passwordEncrypt");
 
 module.exports = {
     list: async (req, res) => {
@@ -46,9 +48,16 @@ module.exports = {
         req.body.isAdmin = false;
 
         const data = await User.create(req.body);
+
+        /* TOKEN */
+        let tokenKey = passwordEncrypt(data._id + Date.now());
+        let tokenData = await Token.create({ userId: data._id, token: tokenKey });
+        /* TOKEN */
+
         res.status(201).send({
             error: false,
             message: "Created",
+            token: tokenData.token,
             data,
         });
     },
