@@ -16,7 +16,8 @@ module.exports = {
                 </ul>
             `
         */
-        const data = await res.getModelList(Reservation);
+       
+        const data = await res.getModelList(Reservation, {}, ["userId, carId"]);
         res.status(200).send({
             error: false,
             message: "Listed",
@@ -51,7 +52,7 @@ module.exports = {
             #swagger.summary = "Get Single Reservation"
         */
 
-        const data = await Reservation.findOne({ _id: req.params.id });
+        const data = await Reservation.findOne({ _id: req.params.id }).populate(["userId, carId"]);
         res.status(200).send({
             error: false,
             message: "Listed The One",
