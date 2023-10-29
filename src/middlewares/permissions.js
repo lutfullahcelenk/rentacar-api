@@ -2,7 +2,7 @@
 
 module.exports = {
     isLogin: (req, res, next) => {
-        if (req.isLogin) {
+        if (req.user && req.isActive) {
             next();
         } else {
             res.errorStatusCode = 403;
@@ -11,7 +11,7 @@ module.exports = {
     },
 
     isAdmin: (req, res, next) => {
-        if (req.isLogin && req.user.isAdmin) {
+        if (req.user && req.isActive && req.user.isAdmin) {
             next();
         } else {
             res.errorStatusCode = 403;

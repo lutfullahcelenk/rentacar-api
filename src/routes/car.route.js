@@ -1,17 +1,19 @@
-"use strict"
+"use strict";
 
-const router = require('express').Router()
+const router = require("express").Router();
+const permission = require("../middlewares/permissions");
+const carController = require("../controllers/car.controller");
 
-const carController = require('../controllers/car.controller')
-
-router.route('/')
+router
+    .route("/")
     .get(carController.list)
-    .post(carController.create)
+    .post(permission.isAdmin, carController.create);
 
-router.route('/:id')
+router
+    .route("/:id")
     .get(carController.read)
-    .put(carController.update)
-    .patch(carController.update)
-    .delete(carController.delete)
+    .put(permission.isAdmin, carController.update)
+    .patch(permission.isAdmin, carController.update)
+    .delete(permission.isAdmin, carController.delete);
 
-module.exports = router
+module.exports = router;

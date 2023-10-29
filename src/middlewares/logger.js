@@ -7,5 +7,5 @@ const now = new Date();
 const today = now.toISOString().split("T")[0];
 
 module.exports = morgan("tiny", {
-    stream: fs.createWriteStream(`./logs/${today}.log`),
+    stream: fs.createWriteStream(`./logs/${today}.log`, { flags: "w" }),
 });
