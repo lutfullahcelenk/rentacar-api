@@ -13,6 +13,8 @@ router
     .route("/register")
     .post(userController.create)
 
+router.get('/verify', userController.verify)
+
 router
     .route("/:id")
     .get(permission.isLogin, userController.read)
