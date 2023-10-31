@@ -9,11 +9,9 @@ router
     .get(permission.isAdmin, userController.list)
     .post(permission.isAdmin, userController.create);
 
-router
-    .route("/register")
-    .post(userController.create)
+router.route("/register").post(userController.create);
 
-router.get('/verify', userController.verify)
+router.get("/verify", userController.verify);
 
 router
     .route("/:id")

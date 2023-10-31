@@ -63,22 +63,26 @@ UserSchema.pre(["save", "updateOne"], function (next) {
     // if process is updateOne, data will receive in "this._update"
     const data = this?._update || this;
 
-    const isEmailValidated = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(data.email); // test from "data".
+    const isEmailValidated = data.email
+        ? /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(data.email) // test from "data".
+        : true;
 
     if (isEmailValidated) {
-        const isPasswordValidated =
-            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&].{8,}$/.test(
-                data.password
-            );
+        if (data?.password) {
+            const isPasswordValidated =
+                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&].{8,}$/.test(
+                    data.password
+                );
 
-        if (isPasswordValidated) {
-            this.password = data.password = passwordEncrypt(data.password);
-
-            this._update = data; // updateOne will wait data from "this._update".
-            next(); // Allow to save.
-        } else {
-            next(new Error("Password not validated."));
+            if (isPasswordValidated) {
+                this.password = data.password = passwordEncrypt(data.password);
+                this._update = data; // updateOne will wait data from "this._update".
+            } else {
+                next(new Error("Password not validated."));
+            }
         }
+
+        next(); // Allow to save.
     } else {
         next(new Error("Email not validated."));
     }
